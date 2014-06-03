@@ -1,0 +1,13 @@
+#!/bin/sh
+
+libtoolize
+aclocal
+automake --add-missing
+autoconf
+
+cd libOpenACC ; ./build ; cd ..
+cd rose       ; ./build ; cd ..
+cd RoseACC    ; ./build ; cd ..
+cd examples   ; ./build ; cd ..
+cd tests      ; ./build ; cd ..
+

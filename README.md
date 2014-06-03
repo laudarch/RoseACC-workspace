@@ -14,7 +14,7 @@ This workspace contains submodules:
  * _examples_:   Current support of OpenACC. Extensions specific to RoseACC. Known issues and inconvenience.
  * _tests_:      libOpenACC and RoseACC tests
 
-## Build & Configure
+## Getting Started
 
 The project uses GNU autotools, to initialize:
 ```shell
