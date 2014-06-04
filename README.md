@@ -10,69 +10,44 @@ These kernels - and the data they use - are managed by libOpenACC an implementat
 This workspace contains submodules:
  * _libOpenACC_: implementation of OpenACC Runtime based on OpenCL
  * _rose_:       open-source source-to-source compiler for C/C++/FORTRAN/... This submodule points to the version used for the latest work on RoseACC.
- * _RoseACC_:    the OpenACC Compiler. Does not have a submodule yet, need to be moved from rose/projects/RoseACC/
- * _examples_:   Current support of OpenACC. Extensions specific to RoseACC. Known issues and inconvenience.
+ * _RoseACC_:    the actual OpenACC Compiler
+ * _examples_:   Current support of OpenACC. Extensions specific to RoseACC. Known issues...
  * _tests_:      libOpenACC and RoseACC tests
 
 ## Getting Started
 
-The project uses GNU autotools, to initialize:
-```shell
-    ./build
-```
-Then to configure:
-```shell
-    ./configure OPTIONS
-```
-For a list of options:
-```shell
-    ./configure --help
-```
-To work, the configure script need to find headers and libraries for OpenCL and sqlite (sqlite will be made optional)
-
-## Make
-
-'make' executes:
-```shell
-    make -C libOpenACC
-    make -C rose/src
-    make -C RoseACC # make -C rose/projects/RoseACC
-    make -C examples
-    make -C tests
-```
-
-## Check
-
-'make check' executes:
-```shell
-    make -C examples check
-    make -C tests check
-```
-
-## Install
-
-**Not Implemented Yet**
-
-'make install' executes:
-```shell
-    make -C libOpenACC install
-    make -C rose/src install
-    make -C RoseACC install # make -C rose/projects/RoseACC install
-```
-
-'make install-check' executes:
-```shell
-    make -C examples install-check
-    make -C tests install-check
-```
-    
-
-## Distribution
-
-**Not Implemented Yet**
+See ./init.sh, this script is not generic (yet) and the path for BOOST, OpenCL, and SQLite3 have to be edited.
+Also, "-j" option for make should have a larger value than 8 if your system permit (twice number of cores if enougth memory, ROSE compilation requires large amount of memory).
 
 ```shell
-    make dist
-    make distcheck
+#!/bin/bash
+
+set -e
+
+TOP_WORKSPACE_DIR=`pwd`
+
+export LD_LIBRARY_PATH=/media/ssd/boost/install/1_45_0/lib:$LD_LIBRARY_PATH
+
+./build
+
+mkdir -p workspace
+
+pushd workspace
+
+$TOP_WORKSPACE_DIR/configure --prefix=$TOP_WORKSPACE_DIR/workspace/install --with-boost=/media/ssd/boost/install/1_45_0 --with-opencl=/usr --with-sqlite=/media/ssd/lib/sqlite
+
+popd
+
+# Following 4 lines can be replaced by : make -C $TOP_WORKSPACE_DIR/workspace/rose/src install-core -j8 (it implies to build/install exampleTranslator and tutorials)
+make -C $TOP_WORKSPACE_DIR/workspace/rose/src -j8
+make -C $TOP_WORKSPACE_DIR/workspace/rose install-data-local
+make -C $TOP_WORKSPACE_DIR/workspace/rose/src install -j8
+cp $TOP_WORKSPACE_DIR/workspace/rose/rosePublicConfig.h $TOP_WORKSPACE_DIR/workspace/install/include
+
+make -C $TOP_WORKSPACE_DIR/workspace/RoseACC -j8
+
+make -C $TOP_WORKSPACE_DIR/workspace/libOpenACC -j8
+make -C $TOP_WORKSPACE_DIR/workspace/examples -j8
+make -C $TOP_WORKSPACE_DIR/workspace/tests -j8
 ```
 
