@@ -23,8 +23,11 @@ make -C $TOP_WORKSPACE_DIR/workspace/rose/src install -j8
 cp $TOP_WORKSPACE_DIR/workspace/rose/rosePublicConfig.h $TOP_WORKSPACE_DIR/workspace/install/include
 
 make -C $TOP_WORKSPACE_DIR/workspace/RoseACC -j8
+make -C $TOP_WORKSPACE_DIR/workspace/RoseACC install
 
 make -C $TOP_WORKSPACE_DIR/workspace/libOpenACC -j8
+
 make -C $TOP_WORKSPACE_DIR/workspace/examples -j8
+
 make -C $TOP_WORKSPACE_DIR/workspace/tests -j8
 
