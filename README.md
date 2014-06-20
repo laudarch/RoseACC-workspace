@@ -16,38 +16,33 @@ This workspace contains submodules:
 
 ## Getting Started
 
-See ./init.sh, this script is not generic (yet) and the path for BOOST, OpenCL, and SQLite3 have to be edited.
-Also, "-j" option for make should have a larger value than 8 if your system permit (twice number of cores if enougth memory, ROSE compilation requires large amount of memory).
+### Checkout the workspace
+
+RoseACC workspace is stored on GitHub.
+Currently (mid June 2014), the workspace point to a repository for ROSE Compiler which is not public.
+Soon, our changes to ROSE Compiler will be distributed through the official ROSE repository on GitHub.
+Meanwhile, access can be granted to our repository (e-mail: vanderbruggentristan@gmail.com).
 
 ```shell
-#!/bin/bash
-
-set -e
-
-TOP_WORKSPACE_DIR=`pwd`
-
-export LD_LIBRARY_PATH=/media/ssd/boost/install/1_45_0/lib:$LD_LIBRARY_PATH
-
-./build
-
-mkdir -p workspace
-
-pushd workspace
-
-$TOP_WORKSPACE_DIR/configure --prefix=$TOP_WORKSPACE_DIR/workspace/install --with-boost=/media/ssd/boost/install/1_45_0 --with-opencl=/usr --with-sqlite=/media/ssd/lib/sqlite
-
-popd
-
-# Following 4 lines can be replaced by : make -C $TOP_WORKSPACE_DIR/workspace/rose/src install-core -j8 (it implies to build/install exampleTranslator and tutorials)
-make -C $TOP_WORKSPACE_DIR/workspace/rose/src -j8
-make -C $TOP_WORKSPACE_DIR/workspace/rose install-data-local
-make -C $TOP_WORKSPACE_DIR/workspace/rose/src install -j8
-cp $TOP_WORKSPACE_DIR/workspace/rose/rosePublicConfig.h $TOP_WORKSPACE_DIR/workspace/install/include
-
-make -C $TOP_WORKSPACE_DIR/workspace/RoseACC -j8
-
-make -C $TOP_WORKSPACE_DIR/workspace/libOpenACC -j8
-make -C $TOP_WORKSPACE_DIR/workspace/examples -j8
-make -C $TOP_WORKSPACE_DIR/workspace/tests -j8
+git clone git@github.com:tristanvdb/RoseACC-workspace.git
+cd RoseACC-workspace
+git submodule init
+git submodule update
 ```
+
+### Setup script
+
+For bash user, we provide a script (setup.sh) that build, compile, and install ROSE Compiler
+
+Usage: ./setup.sh build\_dir install\_dir boost\_home opencl\_home sqlite\_home \[parallel\_make=8\]
+ * build\_dir     : Build directory (created if needed)
+ * install\_dir   : Installation directory ('prefix' for configuration)
+ * boost\_home    : home for Boost
+ * opencl\_home   : home for OpenCL
+ * sqlite\_home   : home for SQLite
+ * parallel\_make : (opt) number of parallel processes to use for make.
+
+### Build \& Configure \& Make
+
+See 'setup.sh'.
 
