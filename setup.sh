@@ -12,22 +12,23 @@ if [ $# -lt 5 ]; then
   echo "       opencl_home   : home for OpenCL"
   echo "       sqlite_home   : home for SQLite"
   echo "       parallel_make : number of parallel processes to use for make."
+  exit
 fi
 
 SOURCE_DIR="$( cd "$( dirname "$0" )" && pwd )"
 
-BUILD_DIR="$( cd "$( dirname "$1" )" && pwd )"
-INSTALL_DIR="$( cd "$( dirname "$2" )" && pwd )"
+BUILD_DIR=$1
+INSTALL_DIR=$2
 
-BOOST_HOME="$( cd "$( dirname "$3" )" && pwd )"
-OPENCL_HOME="$( cd "$( dirname "$4}" )" && pwd )"
-SQLITE_HOME="$( cd "$( dirname "$5" )" && pwd )"
+BOOST_HOME=$3
+OPENCL_HOME=$4
+SQLITE_HOME=$5
 
 if expr "$6" : '-\?[0-9]\+$' >/dev/null
 then
   MAKE_OPTIONS=-j$6
 else
-  MAKE_OPTIONS=-j$6
+  MAKE_OPTIONS=-j8
 fi
 
 export LD_LIBRARY_PATH=$BOOST_HOME/lib:$INSTALL_DIR/lib:$LD_LIBRARY_PATH
