@@ -72,7 +72,7 @@ fi
 
 # Checks for library functions.
 
-ac_configure_args="$ac_configure_args --with-libopenacc-src=$(cd $srcdir/libOpenACC; pwd) --with-libopenacc=`pwd`/install --with-rose=`pwd`/install --with-roseacc=`pwd`/install --with-C_OPTIMIZE=-O0 --with-CXX_OPTIMIZE=-O0 --disable-java --disable-fortran"
+ac_configure_args="$ac_configure_args --with-libopenacc-src=$(cd $srcdir/libOpenACC; pwd) --with-libopenacc=$prefix --with-rose=$prefix --with-roseacc=$prefix --with-C_OPTIMIZE=-O0 --with-CXX_OPTIMIZE=-O0 --disable-java --disable-fortran"
 
 AC_CONFIG_SUBDIRS([libOpenACC
                    RoseACC
