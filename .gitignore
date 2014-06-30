@@ -11,11 +11,14 @@ ltmain.sh
 depcomp
 config.guess
 config.sub
+compile
 
 bin/
 include/
 lib/
 share/
+build_dir/
+install_dir/
 
 Makefile.in
 
