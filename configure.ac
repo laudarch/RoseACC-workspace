@@ -8,45 +8,9 @@ AM_INIT_AUTOMAKE([RoseACC-workspace], [0.1])
 
 LT_INIT()
 
-# Checks for programs.
-
-# Checks for libraries.
-
-AC_ARG_WITH(opencl,        [  --with-opencl            OpenCL path])
-AC_ARG_WITH(opencl-libdir, [  --with-opencl-libdir     OpenCL libraries path])
-
-if test ! -z "$with_opencl"
-then
-  AC_MSG_NOTICE([OpenCL path provided])
-  AC_SUBST(opencl_path, "$with_opencl")
-  AC_SUBST(opencl_lib_path, "$with_opencl/lib")
-else
-  AC_MSG_ERROR([Missing OpenCL headers and/or libraries paths.])
-fi
-if test ! -z "$with_opencl_libdir"
-then
-	AC_MSG_NOTICE([OpenCL libraries path provided])
-        AC_SUBST(opencl_lib_path, $with_opencl_libdir)
-fi
-# TODO test OpenCL
-
-AC_ARG_WITH(sqlite,        [  --with-sqlite            SQLite path])
-AC_ARG_WITH(sqlite-libdir, [  --with-sqlite-libdir     SQLite libraries path])
-
-if test ! -z "$with_sqlite"
-then
-	AC_MSG_NOTICE([SQLite path provided])
-        AC_SUBST(sqlite_path, "$with_sqlite")
-        AC_SUBST(sqlite_lib_path, "$with_sqlite/lib")
-else
-  AC_MSG_ERROR([Missing SQLite headers and/or libraries paths.])
-fi
-if test ! -z "$with_sqlite_libdir"
-then
-	AC_MSG_NOTICE([SQLite libraries path provided])
-        AC_SUBST(sqlite_lib_path, $with_sqlite_libdir)
-fi
-# TODO test SQLite
+#####
+# Boost (needed by ROSE)
+#####
 
 AC_ARG_WITH(boost,         [  --with-boost             BOOST path])
 AC_ARG_WITH(boost-libdir,  [  --with-boost-libdir      BOOST libraries path])
@@ -62,17 +26,57 @@ fi
 if test ! -z "$with_boost_libdir"
 then
   AC_MSG_NOTICE([BOOST headers path provided])
-  AC_SUBST(boost_inc_path, $with_boost_inc)
+  AC_SUBST(boost_lib_path, $with_boost_libdir)
 fi
 # TODO test BOOST
 
-# Checks for header files.
+#####
+# OpenCL
+#####
 
-# Checks for typedefs, structures, and compiler characteristics.
+AC_ARG_WITH(opencl-include, [  --with-opencl-include    OpenCL include path])
+AC_ARG_WITH(opencl-libdir,  [  --with-opencl-libdir     OpenCL library path])
 
-# Checks for library functions.
+if test ! -z "$with_opencl_include"
+then
+	AC_MSG_NOTICE([OpenCL include path provided])
+        AC_SUBST(opencl_inc_path, $with_opencl_include)
+else
+  AC_MSG_ERROR([Missing OpenCL include path.])
+fi
+if test ! -z "$with_opencl_libdir"
+then
+	AC_MSG_NOTICE([OpenCL library path provided])
+        AC_SUBST(opencl_lib_path, $with_opencl_libdir)
+else
+  AC_MSG_ERROR([Missing OpenCL library path.])
+fi
+# TODO test OpenCL
 
-ac_configure_args="$ac_configure_args --with-libopenacc-src=$(cd $srcdir/libOpenACC; pwd) --with-libopenacc=$prefix --with-rose=$prefix --with-roseacc=$prefix --with-C_OPTIMIZE=-O0 --with-CXX_OPTIMIZE=-O0 --disable-java --disable-fortran"
+#####
+# SQLite
+#####
+
+AC_ARG_WITH(sqlite-include, [  --with-sqlite-include    SQLite include path])
+AC_ARG_WITH(sqlite-libdir,  [  --with-sqlite-libdir     SQLite library path])
+
+if test ! -z "$with_sqlite_include"
+then
+	AC_MSG_NOTICE([SQLite include path provided])
+        AC_SUBST(sqlite_inc_path, $with_sqlite_include)
+else
+  AC_MSG_ERROR([Missing SQLite include path.])
+fi
+if test ! -z "$with_sqlite_libdir"
+then
+	AC_MSG_NOTICE([SQLite library path provided])
+        AC_SUBST(sqlite_lib_path, $with_sqlite_libdir)
+else
+  AC_MSG_ERROR([Missing SQLite library path.])
+fi
+# TODO test SQLite
+
+ac_configure_args="$ac_configure_args --with-openacc-include=$prefix/include --with-openacc-libdir=$prefix/lib --with-openacc-binary=$prefix/bin --with-rose=$prefix --with-roseacc=$prefix --with-C_OPTIMIZE=-O0 --with-CXX_OPTIMIZE=-O0 --disable-java --disable-fortran"
 
 AC_CONFIG_SUBDIRS([libOpenACC
                    RoseACC
