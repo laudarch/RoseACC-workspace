@@ -4,9 +4,6 @@
 [submodule "rose"]
 	path = rose
 	url = git@github.com:tristanvdb/rose-for-openacc-to-opencl-compiler.git
-[submodule "examples"]
-	path = examples
-	url = git@github.com:tristanvdb/RoseACC-examples.git
 [submodule "tests"]
 	path = tests
 	url = git@github.com:tristanvdb/RoseACC-tests.git
