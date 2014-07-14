@@ -80,7 +80,6 @@ ac_configure_args="$ac_configure_args --with-openacc-include=$prefix/include --w
 
 AC_CONFIG_SUBDIRS([libOpenACC
                    RoseACC
-                   examples
                    tests
                    rose])
 

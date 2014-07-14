@@ -60,9 +60,7 @@ make $MAKE_OPTIONS -C $BUILD_DIR/RoseACC install
 
 make $MAKE_OPTIONS -C $BUILD_DIR/libOpenACC install
 
-make $MAKE_OPTIONS -C $BUILD_DIR/examples
-
-make $MAKE_OPTIONS -C $BUILD_DIR/tests
+make $MAKE_OPTIONS -C $BUILD_DIR/tests check
 
 echo "*********************************************************"
 echo

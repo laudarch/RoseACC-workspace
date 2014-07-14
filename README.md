@@ -11,7 +11,6 @@ This workspace contains submodules:
  * _libOpenACC_: implementation of OpenACC Runtime based on OpenCL
  * _rose_:       open-source source-to-source compiler for C/C++/FORTRAN/... This submodule points to the version used for the latest work on RoseACC.
  * _RoseACC_:    the actual OpenACC Compiler
- * _examples_:   Current support of OpenACC. Extensions specific to RoseACC. Known issues...
  * _tests_:      libOpenACC and RoseACC tests
 
 ## Getting Started
