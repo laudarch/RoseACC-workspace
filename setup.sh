@@ -20,11 +20,11 @@ fi
 SOURCE_DIR="$( cd "$( dirname "$0" )" && pwd )"
 
 BUILD_DIR=$1
-mkdir $BUILD_DIR
+mkdir -p $BUILD_DIR
 BUILD_DIR="$( cd $BUILD_DIR && pwd )"
 
 INSTALL_DIR=$2
-mkdir $INSTALL_DIR
+mkdir -p $INSTALL_DIR
 INSTALL_DIR="$( cd $INSTALL_DIR && pwd )"
 
 BOOST_HOME=$3
