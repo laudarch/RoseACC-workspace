@@ -5,7 +5,7 @@ set -e
 LOCAL_DIR=`pwd`
 
 if [ $# -lt 7 ]; then
-  echo "Usage: ./setup.sh build_dir install_dir boost_home opencl_inc opencl_lib sqlite_inc sqlite_lib [parallel_make=8]"
+  echo "Usage: ./setup.sh build_dir install_dir boost_home opencl_inc opencl_lib sqlite_inc sqlite_lib [parallel_make=1]"
   echo "       build_dir     : Build directory (created if needed)"
   echo "       install_dir   : Installation directory ('prefix' for configuration)"
   echo "       boost_home    : home for Boost"
@@ -13,7 +13,7 @@ if [ $# -lt 7 ]; then
   echo "       opencl_lib    : lib path for OpenCL"
   echo "       sqlite_inc    : inc path for SQLite"
   echo "       sqlite_lib    : lib path for SQLite"
-  echo "       parallel_make : number of parallel processes to use for make."
+  echo "       parallel_make : number of parallel processes to use for make (default is 1)."
   exit
 fi
 
@@ -36,11 +36,7 @@ SQLITE_LIB=$7
 if expr "$8" : '-\?[0-9]\+$' >/dev/null
 then
   MAKE_OPTIONS=-j$8
-else
-  MAKE_OPTIONS=-j8
 fi
-
-export LD_LIBRARY_PATH=$BOOST_HOME/lib:$INSTALL_DIR/lib:$LD_LIBRARY_PATH
 
 cd $SOURCE_DIR
 
@@ -60,7 +56,9 @@ make $MAKE_OPTIONS -C $BUILD_DIR/RoseACC install
 
 make $MAKE_OPTIONS -C $BUILD_DIR/libOpenACC install
 
-make $MAKE_OPTIONS -C $BUILD_DIR/tests check
+make $MAKE_OPTIONS -C $BUILD_DIR/tests
+
+make -C $BUILD_DIR/tests check
 
 echo "*********************************************************"
 echo
