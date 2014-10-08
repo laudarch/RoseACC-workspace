@@ -56,19 +56,23 @@ make $MAKE_OPTIONS -C $BUILD_DIR/RoseACC install
 
 make $MAKE_OPTIONS -C $BUILD_DIR/libOpenACC install
 
-make $MAKE_OPTIONS -C $BUILD_DIR/tests
+echo > $INSTALL_DIR/roseacc.rc
+echo "export LD_LIBRARY_PATH=$INSTALL_DIR/lib:$LD_LIBRARY_PATH" >> $INSTALL_DIR/roseacc.rc
+echo "export PATH=$INSTALL_DIR/bin:$PATH" >> $INSTALL_DIR/roseacc.rc
+
+source $INSTALL_DIR/roseacc.rc
 
 make -C $BUILD_DIR/tests check
 
 echo "*********************************************************"
 echo
-echo "RoseACC workspace was succesfully setup. The ROSE Compiler, RoseACC, and libOpenACC have been compiled and install."
+echo "RoseACC workspace was succesfully setup. The ROSE Compiler, RoseACC, and libOpenACC have been compiled, installed, and tested."
 echo
-echo "Please run 'make -C $BUILD_DIR/tests check' and 'make -C $BUILD_DIR/examples check' if there is a valid OpenCL platform on this machine."
+echo "RoseACC environment can be loaded using $INSTALL_DIR/roseacc.rc"
 echo
-echo "You might want to add to you ~/.bashrc :"
-echo "    export PATH=$INSTALL_DIR/bin:\$PATH"
-echo "    export LD_LIBRARY_PATH=$INSTALL_DIR/lib:\$LD_LIBRARY_PATH"
+echo "*********************************************************"
+echo
+openacc -l
 echo
 echo "*********************************************************"
 
